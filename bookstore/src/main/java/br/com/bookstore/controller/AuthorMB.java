@@ -4,14 +4,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import br.com.bookstore.model.Author;
 
 @Named("authorManagedBean")
-@ApplicationScoped
+@SessionScoped
 public class AuthorMB implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -37,12 +39,14 @@ public class AuthorMB implements Serializable{
 		this.authors = authors;
 	}
 
-	public String add() {
+	public void add() {
 		authors.add(author);
+		
+		FacesMessage message = new FacesMessage("Author successfully added.");
+		FacesContext.getCurrentInstance().addMessage(null, message);
+		
 		System.out.println("OK " + author.getName() + " - " + author.getEmail());
 		clearObject();
-		
-		return "OK";
 	}
 	
 	private void clearObject() {

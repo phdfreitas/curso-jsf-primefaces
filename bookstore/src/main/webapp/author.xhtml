@@ -2,31 +2,48 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
 	  xmlns:h="http://xmlns.jcp.org/jsf/html"
-	  xmlns:f="http://xmlns.jcp.org/jsf/core">
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	  xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<h:outputStylesheet library="css" name="style.css"/>
+	
 	<title>Insert title here</title>
 </h:head>
 <h:body>
-	<h:form>
-		<h:panelGrid columns="2">
-			<h:outputText value="Name"/>
-			<h:inputText value="#{authorManagedBean.author.name}"/>
+	<h:form id="form">
+		<p:growl autoUpdate="true"/>
+	
+		<h:panelGrid columns="3">
+			<p:outputLabel for="authorName" value="Name"/>
+			<p:inputText 
+					id="authorName" 
+					value="#{authorManagedBean.author.name}" 
+					required="true" 
+					requiredMessage="Name is a required field"
+					maxlength="10"
+					placeholder="Type author's name here"
+					title="Author name"
+			/>
+			<p:message for="authorName"/>
 			
-			<h:outputText value="E-mail"/>
-			<h:inputText value="#{authorManagedBean.author.email}"/>
+				
+			<p:outputLabel for="authorEmail" value="E-mail"/>
+			<p:inputText id="authorEmail" value="#{authorManagedBean.author.email}" required="true" requiredMessage="E-mail is a required field"/>
+			<p:message for="authorEmail"/>
 			
-			<h:outputText/>
-			<h:commandButton value="Save" action="#{authorManagedBean.add}"/>
+			<p:outputLabel/>
+			<p:commandButton id="saveAuthorButton" value="Save" action="#{authorManagedBean.add}" update="form authorTable"/>
 		</h:panelGrid>	
 	</h:form>
 	
 	<h1>Authors List</h1>
 	
-	<h:dataTable value="#{authorManagedBean.authors}" var="a" border="1">
-		<h:column>#{a.name}</h:column>
-		<h:column>#{a.email}</h:column>
-	</h:dataTable>
+	<p:dataTable id="authorTable" value="#{authorManagedBean.authors}" var="a" border="1">
+		<p:column headerText="Name">#{a.name}</p:column>
+		<p:column headerText="E-mail">#{a.email}</p:column>
+	</p:dataTable>
 	
 </h:body>
 </html>
