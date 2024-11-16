@@ -45,7 +45,7 @@ public class AuthorMB implements Serializable{
 		FacesMessage message = new FacesMessage("Author successfully added.");
 		FacesContext.getCurrentInstance().addMessage(null, message);
 		
-		System.out.println("OK " + author.getName() + " - " + author.getEmail());
+		System.out.println("OK " + author.getName() + " - " + author.getNationality());
 		clearObject();
 	}
 	
