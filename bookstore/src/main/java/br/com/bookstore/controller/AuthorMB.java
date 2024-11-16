@@ -4,13 +4,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import br.com.bookstore.exception.BusinessException;
 import br.com.bookstore.model.Author;
+import br.com.bookstore.service.AuthorService;
+import br.com.bookstore.utils.Message;
 
 @Named("authorManagedBean")
 @SessionScoped
@@ -21,7 +25,41 @@ public class AuthorMB implements Serializable{
 	@Inject
 	private Author author;
 	
-	private List<Author> authors = new ArrayList<Author>();
+	@Inject
+	private AuthorService authorService;
+	
+	private List<Author> authors;
+	
+	@PostConstruct
+	public void initElements() {
+		authors = authorService.findAllAuthors();
+	}
+	
+	public void addAuthor() {
+		try {
+			authorService.saveAuthor(author);
+			author = new Author();
+			
+			initElements();
+			
+			Message.info("Author successfully added.");
+		}
+		catch(BusinessException e) {
+			Message.erro(e.getMessage());
+		}
+	}
+	
+	public void removeAuthor() {
+		try {
+			authorService.removeAuthor(author);
+			initElements();
+			
+			Message.info(author.getName() + "was removed");
+		}
+		catch(BusinessException e) {
+			Message.erro(e.getMessage());
+		}
+	}
 	
 	public Author getAuthor() {
 		return author;
@@ -33,24 +71,5 @@ public class AuthorMB implements Serializable{
 		
 	public List<Author> getAuthors() {
 		return authors;
-	}
-
-	public void setAuthors(List<Author> authors) {
-		this.authors = authors;
-	}
-
-	public void add() {
-		authors.add(author);
-		
-		FacesMessage message = new FacesMessage("Author successfully added.");
-		FacesContext.getCurrentInstance().addMessage(null, message);
-		
-		System.out.println("OK " + author.getName() + " - " + author.getNationality());
-		clearObject();
-	}
-	
-	private void clearObject() {
-		author = new Author();
-	}
-	
+	}	
 }
