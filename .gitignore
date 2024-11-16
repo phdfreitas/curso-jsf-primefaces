@@ -1,0 +1,7 @@
+/.metadata/
+Servers
+*/target
+.settings/
+.project
+.metadata/
+.classpath
