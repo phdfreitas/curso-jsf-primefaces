@@ -1,0 +1,67 @@
+@charset "UTF-8";
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: url("https://images.pexels.com/photos/694740/pexels-photo-694740.jpeg") no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+}
+
+.formLoginBox {
+	margin: 15px;
+}
+
+.ui-panelgrid, .ui-widget-content{
+	background-color: fuchsia !important;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.login-box {
+    background: rgba(176, 196, 222, 0.1);
+    border-radius: 10px; 
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+    padding: 30px 40px; 
+    text-align: center;
+    width: 300px; 
+    backdrop-filter: blur(4px);
+    color: white !important;
+    font-weight: 800 !important;
+    font-size: 24px;
+}
+
+
+.login-form .ui-inputfield {
+    width: 100%;
+    margin-bottom: 15px;
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: white !important;
+	font-weight: 800 !important;
+}
+
+.login-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #2F4F4F !important;
+    border: none !important;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.register-link{
+	color: white !important;
+}
+
+.login-button:hover {
+    background-color: #4cae4c;
+}
