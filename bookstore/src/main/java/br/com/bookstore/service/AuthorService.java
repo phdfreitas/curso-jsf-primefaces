@@ -26,6 +26,6 @@ public class AuthorService implements Serializable{
 	}
 	
 	public List<Author> findAllAuthors(){
-		return dao.findAll("select a from Author order by a.name");
+		return dao.findAll("select a from Author a order by a.id");
 	}
 }

@@ -5,8 +5,11 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
-public class GenericDao<T> implements Serializable {
+import br.com.bookstore.model.Base;
+
+public class GenericDao<T extends Base> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -17,10 +20,11 @@ public class GenericDao<T> implements Serializable {
 	}
 	
 	public void save(T t) {
+		System.out.println("Dao Save " + t);
 		try {
 			manager.getTransaction().begin();
-			
-			if(t.getClass().getField("id") == null) {
+						
+			if(t.getId() == null) {
 				manager.persist(t);
 			}
 			else {
@@ -30,6 +34,7 @@ public class GenericDao<T> implements Serializable {
 			manager.getTransaction().commit();
 		}
 		catch(Exception e) {
+			e.printStackTrace();
 			manager.getTransaction().rollback();
 		}
 	}
@@ -51,7 +56,7 @@ public class GenericDao<T> implements Serializable {
 	
 	@SuppressWarnings("unchecked")
 	public List<T> findAll(String jpql){
-		Query query = manager.createQuery(jpql);
+		TypedQuery<T> query = (TypedQuery<T>) manager.createQuery(jpql);
 		
 		return query.getResultList();
 	}

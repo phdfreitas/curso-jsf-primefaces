@@ -9,40 +9,95 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<h:outputStylesheet library="css" name="style.css"/>
 	
-	<title>Insert title here</title>
+	<title>Register new author</title>
 </h:head>
 <h:body>
 	<h:form id="form">
 		<p:growl autoUpdate="true"/>
 	
-		<h:panelGrid columns="3">
+		<h:panelGrid columns="2">
 			<p:outputLabel for="authorName" value="Name"/>
 			<p:inputText 
 					id="authorName" 
 					value="#{authorManagedBean.author.name}" 
 					required="true" 
 					requiredMessage="Name is a required field"
-					maxlength="10"
-					placeholder="Type author's name here"
+					placeholder="Type author's name"
 					title="Author name"
 			/>
-			<p:message for="authorName"/>
 			
+			<p:outputLabel for="authorNationality" value="Nationality"/>
+			<p:inputText 
+					id="authorNationality" 
+					value="#{authorManagedBean.author.nationality}" 
+					required="true" 
+					requiredMessage="Nationality is a required field"
+					placeholder="Type author's nationality"
+					title="Author's nationality"
+			/>
+			
+			<p:outputLabel value="Birth Date:" for="authorBirthDate" />
+			<p:calendar 
+					id="authorBirthDate"
+					pattern="dd/MM/yyyy"
+					value="#{authorManagedBean.author.birthDate}"
+			/>
+			
+			<p:outputLabel value="Death Date:" for="authorDeathDate" />
+			<p:calendar 
+					id="authorDeathDate"
+					pattern="dd/MM/yyyy"
+					value="#{authorManagedBean.author.deathDate}"
+			/>	
+			
+			<p:outputLabel for="authorBiography" value="Biography"/>
+			<p:inputText 
+					id="authorBiography" 
+					value="#{authorManagedBean.author.biography}" 
+					placeholder="Type author's biography"
+					title="Author's biography"
+			/>
 				
-			<p:outputLabel for="authorEmail" value="E-mail"/>
-			<p:inputText id="authorEmail" value="#{authorManagedBean.author.email}" required="true" requiredMessage="E-mail is a required field"/>
-			<p:message for="authorEmail"/>
 			
 			<p:outputLabel/>
-			<p:commandButton id="saveAuthorButton" value="Save" action="#{authorManagedBean.add}" update="form authorTable"/>
+			<p:commandButton id="saveAuthorButton" value="Save" action="#{authorManagedBean.addAuthor}" update="form authorTable"/>
 		</h:panelGrid>	
 	</h:form>
 	
 	<h1>Authors List</h1>
 	
-	<p:dataTable id="authorTable" value="#{authorManagedBean.authors}" var="a" border="1">
-		<p:column headerText="Name">#{a.name}</p:column>
-		<p:column headerText="E-mail">#{a.email}</p:column>
+	<p:dataTable id="authorTable" value="#{authorManagedBean.authors}" var="a" border="1" paginator="true" rows="5">
+		<p:column headerText="Name">
+			<p:outputLabel value="#{a.name}"/>
+		</p:column>
+		
+		<p:column headerText="Nationality">
+			<p:outputLabel value="#{a.nationality}"/>
+		</p:column>
+		
+		<p:column headerText="Birth Date">
+			<p:outputLabel value="#{a.birthDate}">
+				<f:convertDateTime pattern="dd/MM/yyyy"/>
+			</p:outputLabel>
+		</p:column>
+		
+		<p:column headerText="Death Date">
+			<p:outputLabel value="#{a.deathDate}"/>
+		</p:column>
+		
+		<p:column headerText="Biography">
+			<p:outputLabel value="#{a.biography}"/>
+		</p:column>
+		
+		<p:column headerText="Actions">
+			<p:commandButton icon="pi pi-pencil" update="form" process="@this">
+				<f:setPropertyActionListener value="#{a}" target="#{authorManagedBean.author}"/>
+			</p:commandButton>
+			
+			<p:commandButton action="#{authorManagedBean.removeAuthor}" icon="pi pi-trash" update="authorTable" process="@this">
+				<f:setPropertyActionListener value="#{a}" target="#{authorManagedBean.author}"/>
+			</p:commandButton>
+		</p:column>
 	</p:dataTable>
 	
 </h:body>

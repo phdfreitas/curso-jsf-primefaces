@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -17,7 +18,7 @@ import br.com.bookstore.service.AuthorService;
 import br.com.bookstore.utils.Message;
 
 @Named("authorManagedBean")
-@SessionScoped
+@ViewScoped
 public class AuthorMB implements Serializable{
 
 	private static final long serialVersionUID = 1L;
